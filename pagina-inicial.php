@@ -29,6 +29,7 @@
             <ul>
                 
                 <li><a href="listar-alunos.php">Listagem de Usuários</a></li>
+                <li><a href="listar-clientes.php">Listagem de Clientes</a></li>
                 <li><a href="valores.php">Valores</a></li>
                 <li><a href="pdf.php">Relatórios</a></li>
                 

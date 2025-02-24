@@ -1,88 +1,81 @@
+<?php 
+session_start(); // Iniciar a sessão no topo do script
+
+require 'modulos.php';
+include 'menu.html';
+
+if (!isset($_SESSION['logado']) || !$_SESSION['logado']) {
+    login_necessario();
+    exit; // Impede execução do restante do código
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar</title>
+    <title>Cadastrar Serviço</title>
     <link rel="stylesheet" href="estilo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
-    <?php 
-        require 'modulos.php';
-        include 'menu.html';
-
-        session_start();
-        if ($_SESSION['logado']):
-    ?>
     <br>
 
     <div class="container container-cadastro">
+        <h2><i class="fa-solid fa-tools"></i> Cadastro de Serviço</h2>
+        <a href="pagina-inicial.php" class="link-voltar"><i class="fas fa-arrow-left"></i> Voltar</a>
 
-    <h2><i class="fa-brands fa-creative-commons-nd"></i>Cadastro de Serviço</h2>
-    <a href="listar-alunos.php" class="link-voltar"><i class="fas fa-arrow-left"></i>Cancelar</a>
         <form action="" method="POST">
-            <p>Tipo de Serviço:<input type="text" name="tipo" placeholder="Digite o tipo de serviço"></p>
-            <p>Preço:<input type="text" name="preco" placeholder="Digite o preço"></p>
-            <p>Data do serviço: <br> 
-             <input type="date" name="data" placeholder="Digite a data do serviço"></p>
-            <p>Executante: <span id='aviso-usuario'></span>
-                <input type="text" name="executante" placeholder="Digite quem vai realizar o serviço">
+            <p>Tipo de Serviço:<input type="text" name="nome_servico" required placeholder="Digite o nome do serviço"></p>
+            <p>Descriçã: <br><input name="descricao" placeholder="Digite a descrição do serviço"></input></p>
+            <p>Preço: <br><input type="number" step="0.01" name="preco" required placeholder="Digite o preço"></p>
+            <p>Data do Serviço: <br> 
+                <input type="date" name="data_criacao" required>
             </p>
             <input type="submit" name="cadastrar" value="Cadastrar">
         </form>
-
     </div>
-
-    <?php 
-        else:
-            login_necessario();
-        endif
-    ?>
-
 
 </body>
 
 </html>
 
 <?php 
+require 'conexao.php';
 
-    $cadastrado = false;
-    $usuario_existente = false;
-    require 'conexao.php';
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cadastrar'])) {
+    $nomeServico = trim($_POST['nome_servico'] ?? '');
+    $descricao = trim($_POST['descricao'] ?? '');
+    $preco = $_POST['preco'] ?? null;
+    $dataCriacao = $_POST['data_criacao'] ?? null;
 
-    if (isset($_POST['cadastrar'])) {
-
-        if (existe_usuario($_POST['usuarios'])) {
-            aviso_usuario_existente();
-        } else {
-            $tipoServico = $_POST['tipo'];
-            $preco = $_POST['preco'];
-            $dataServico = $_POST['data'];
-            $executante = $_POST['executante'];
-            $cadastro = $conexao->prepare(
-                "INSERT INTO servicos (tipoServico, preco, dataServico, executante) VALUES (:tipoServico, :preco, :dataServico, :executante);"
-            );
-            $cadastro->bindValue(":tipoServico", $tipoServico);
-            $cadastro->bindValue(":preco", $preco);
-            $cadastro->bindValue(":dataServico", $dataServico);
-            $cadastro->bindValue(":executante", $executante);
-            $cadastro->execute();
-            $cadastrado = true;
-        }
-
+    // Verificação para evitar valores vazios
+    if (empty($nomeServico) || empty($preco) || empty($dataCriacao)) {
+        echo "<script>alert('Preencha todos os campos obrigatórios!');</script>";
+        exit;
     }
 
-    if ($cadastrado):
-?>
+    try {
+        $cadastro = $conexao->prepare(
+            "INSERT INTO servicos (nome_servico, descricao, preco, data_criacao) 
+             VALUES (:nome_servico, :descricao, :preco, :data_criacao);"
+        );
 
-<script>
-alert('Cadastrado com sucesso!')
-</script>
+        $cadastro->bindValue(":nome_servico", $nomeServico, PDO::PARAM_STR);
+        $cadastro->bindValue(":descricao", $descricao, PDO::PARAM_STR);
+        $cadastro->bindValue(":preco", $preco, PDO::PARAM_STR);
+        $cadastro->bindValue(":data_criacao", $dataCriacao, PDO::PARAM_STR);
 
-
-<?php 
-    endif
+        if ($cadastro->execute()) {
+            echo "<script>alert('Serviço cadastrado com sucesso!'); window.location.href='servicos.php';</script>";
+        } else {
+            echo "<script>alert('Erro ao cadastrar o serviço!');</script>";
+        }
+    } catch (PDOException $e) {
+        echo "<script>alert('Erro no banco de dados: " . addslashes($e->getMessage()) . "');</script>";
+    }
+}
 ?>
