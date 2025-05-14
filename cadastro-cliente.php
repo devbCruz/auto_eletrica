@@ -22,7 +22,8 @@
         <h2>Cadastro de Clientes</h2>
         <form action="" method="POST">
             <p>Nome:<input type="text" name="NomeCli" placeholder="Digite o nome do cliente" required></p>
-            <p>Endereço:<input type="text" name="EnderCli" placeholder="Digite o endereço do cliente" required></p> 
+            <p>Endereço:<input type="text" name="EnderCli" placeholder="Digite o endereço do cliente" required></p>
+            <p>Email:<input type="text" name="Email" placeholder="Digite o e-mail do cliente" required></p> 
             <p>Telefone:<input type="text" name="FoneCli" placeholder="Digite o telefone do cliente" required></p>
             <p>Veículo: <input type="text" name="Veiculo" placeholder="Digite o veículo" required></p>
             <input type="submit" name="cadastrar" value="Cadastrar">

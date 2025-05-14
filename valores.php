@@ -21,7 +21,7 @@
         <?php
         require 'conexao.php';
 
-        $consulta = $conexao->prepare("SELECT SUM(preco) AS total FROM servicos");
+        $consulta = $conexao->prepare("SELECT SUM(preco) AS total FROM servicos_baixados");
         $consulta->execute();
         $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
         $total = $resultado['total'];

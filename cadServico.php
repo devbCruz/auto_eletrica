@@ -31,6 +31,7 @@ if (!isset($_SESSION['logado']) || !$_SESSION['logado']) {
         <form action="" method="POST">
             <p>Tipo de Serviço:<input type="text" name="nome_servico" required placeholder="Digite o nome do serviço"></p>
             <p>Descriçã: <br><input name="descricao" placeholder="Digite a descrição do serviço"></input></p>
+            <p>E-mail: <br><input name="e-mail" placeholder="Digite o email do cliente"></input></p>
             <p>Preço: <br><input type="number" step="0.01" name="preco" required placeholder="Digite o preço"></p>
             <p>Data do Serviço: <br> 
                 <input type="date" name="data_criacao" required>

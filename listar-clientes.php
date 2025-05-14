@@ -53,7 +53,7 @@
                             </div>
 
                             <div class='icone-lista'>
-                                <a href='excluir.php?id=$cliente->ID' onclick=\"return confirm('Tem certeza que deseja excluir $cliente->NomeCli?');\">
+                                <a href='excluir-cli.php?id=$cliente->ID' onclick=\"return confirm('Tem certeza que deseja excluir $cliente->NomeCli?');\">
                                     <i class='fas fa-trash-alt' style='color: red;' title='Excluir'></i>
                                 </a>
                             </div>

@@ -1,35 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require 'vendor/autoload.php'; // Carrega as dependências (incluindo DomPDF)
+require 'conexao.php';
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatórios de Serviços executados</title>
-    <link rel="stylesheet" href="estilo.css">
-</head>
+use Dompdf\Dompdf;
 
-<body>
-    <!-- Seu código PHP aqui -->
-    <?php  
-  require 'conexao.php';
-
-$consulta = $conexao->prepare("SELECT * FROM servicos");
+// Consulta os dados do banco
+$consulta = $conexao->prepare("SELECT * FROM servicos_baixados");
 $consulta->execute();
 $resultado = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
+// Monta o HTML do relatório
 if ($consulta->rowCount() > 0) {
-    $html = "<table class='table'>";
-    $html .= "<thead>";
-    $html .= "<tr>";
-    $html .= "<th scope='col'>ID Serviço</th>";
-    $html .= "<th scope='col'>Tipo de Serviço</th>";
-    $html .= "<th scope='col'>Preço</th>";
-    $html .= "<th scope='col'>Data do Serviço</th>";
-    $html .= "<th scope='col'>Executante</th>";
-    $html .= "</tr>";
-    $html .= "</thead>";
-    $html .= "<tbody class='table-group-divider'>";
+    $html = "
+        <meta charset='UTF-8'>
+        <h2 style='text-align:center;'>Relatório de Serviços Executados</h2>
+        <table style='width:100%; border-collapse: collapse;' border='1'>
+            <thead>
+                <tr>
+                    <th>ID Serviço</th>
+                    <th>Tipo de Serviço</th>
+                    <th>Preço</th>
+                    <th>Data do Serviço</th>
+                    <th>Executante</th>
+                </tr>
+            </thead>
+            <tbody>
+    ";
 
     $totalPrecos = 0;
 
@@ -37,42 +33,39 @@ if ($consulta->rowCount() > 0) {
         $dataFormatada = date('d/m/Y', strtotime($row['dataServico']));
         $preco = floatval($row['preco']);
         $precoFormatado = 'R$ ' . number_format($preco, 2, ',', '.');
-        $html .= "<tr>";
-        $html .= "<th scope='row'>".$row['id']."</th>";
-        $html .= "<td>".$row['tipoServico']."</td>";
-        $html .= "<td>".$precoFormatado."</td>";
-        $html .= "<td>".$dataFormatada."</td>";
-        $html .= "<td>".$row['executante']."</td>";
-        $html .= "</tr>";
+        
+        $html .= "
+            <tr>
+                <td>{$row['id']}</td>
+                <td>{$row['tipoServico']}</td>
+                <td>{$precoFormatado}</td>
+                <td>{$dataFormatada}</td>
+                <td>{$row['executante']}</td>
+            </tr>
+        ";
 
         $totalPrecos += $preco;
     }
 
     $totalFormatado = 'R$ ' . number_format($totalPrecos, 2, ',', '.');
 
-    $html .= "<tr>";
-    $html .= "<td colspan='2'>Total</td>";
-    $html .= "<td>".$totalFormatado."</td>";
-    $html .= "<td colspan='2'></td>";
-    $html .= "</tr>";
-
-    $html .= "</tbody>";
-    $html .= "</table>";
+    $html .= "
+            <tr>
+                <td colspan='2'><strong>Total</strong></td>
+                <td><strong>{$totalFormatado}</strong></td>
+                <td colspan='2'></td>
+            </tr>
+        </tbody>
+    </table>";
 } else {
-    $html = 'Nenhum dado encontrado';
+    $html = "<p>Nenhum dado encontrado</p>";
 }
 
-use Dompdf\Dompdf;
-require_once 'dompdf/autoload.inc.php';
-
+// Geração do PDF
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
-$dompdf->set_option('defaultFont', 'Arial');
-$dompdf->setPaper('A4', 'portrait');
+$dompdf->set_option('defaultFont', 'Arial'); 
+$dompdf->setPaper('A4', 'portrait'); 
 $dompdf->render();
-$dompdf->stream();
-  
+$dompdf->stream("relatorio_servicos.pdf", ["Attachment" => false]);
 ?>
-</body>
-
-</html>

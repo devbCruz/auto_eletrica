@@ -1,0 +1,37 @@
+Itens adicionado ao projeto
+
+- Composer. Gerenciados de dependências da linguagem PHP, 
+ele automatiza o processo de instalação e atualização de
+pacotes e biblioteca que o projeto depende
+
+-Adicionado a funcionalidade de envio de email
+Criado o arquivo enviar-email.php utilizando PHPMailer
+Adicionado no prjeto o uso de variávei de ambiente (.env)
+para armazenar emails e senhas.
+De primeiro momento o envio de email está sendo pela tela inicial ao finalizar o serviço
+
+-Corrigido o erro de excluir clientes e criado o arquivo
+exclui-cli.php
+
+-Adicionado as colunas email nas tabelas servicos e cliente
+no banco de dados
+
+-Ajustado a tela de serviços baixados juntamente com a tela
+principal, que o botão finalizar serviço não estava funcionando
+corretamente
+
+-Ajustado a tela de valores, que estava puxando os valores da tebale 
+serviços e foi alterado para servicos baixados.
+
+-Ajustado a tela de relatório, onde o realtório não estava sendo gerado,
+foi adicionado ao projeto o DomPDF para realizar a geração do relatório de
+serviços executados.
+
+-Ajustado a funcionalidade de excluir clientes, não estava inativando.
+
+-Estilizado a tabela na página inicial, tabela que mostra os serviços pendentes,
+também estilizado o botão finalizar.
+
+-Ajustado a funcionalideade de excluir serviços.
+
+-Adicionado a o campo email nas tabelas cliente e serviço

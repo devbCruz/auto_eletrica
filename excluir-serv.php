@@ -7,7 +7,7 @@
     {
         try{
             $id = $_GET['id'];
-            $deletar = $conexao->prepare("DELETE FROM cadservicos WHERE idServico = '$id';");
+            $deletar = $conexao->prepare("DELETE FROM servicos WHERE id = '$id';");
             $deletar->execute();
             header('location:servicos.php');
         } catch (Exception $erro) {

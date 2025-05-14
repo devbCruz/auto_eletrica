@@ -7,36 +7,35 @@ body {
 
 img{
     display: block;
-    margin: 0 auto; /* Centraliza horizontalmente */
-    max-width: 200px; /* Define um tamanho máximo opcional */
+    margin: 0 auto;
+    max-width: 200px; 
     height: auto;
-    margin-bottom: 20px; /* Espaço abaixo da imagem */
+    margin-bottom: 20px; 
     background-color: #007bff;
 }
 
 .container {
-    margin-left: 24%;
-    margin-top: 20px;
-    padding: 10px 20px;
+   
+    padding: 10px 10px;
     border-radius: 20px;
-    width: 50%;
+    
     background: #007bff; 
 }
 
 .container-login {
-    background-image: url('e.png'); /* Define a imagem de fundo */
-    background-position: center; /* Centraliza a imagem no fundo */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    background-size: contain; /* Garante que a imagem se ajuste proporcionalmente dentro do contêiner */
-    width: 50%; /* Define a largura do contêiner */
-    height: 300px; /* Define a altura do contêiner */
+    background-image: url('e.png');
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-size: contain; 
+    width: 50%; 
+    height: 300px; 
     display: flex;
-    justify-content: center; /* Alinha o conteúdo horizontalmente */
-    align-items: center; /* Alinha o conteúdo verticalmente */
-    margin: 0 auto; /* Centraliza o contêiner na página */
-    border: 1px solid #ccc; /* Adiciona uma borda para visualização opcional */
-    border-radius: 8px; /* Bordas arredondadas para um estilo moderno */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao contêiner */
+    justify-content: center; 
+    align-items: center; 
+    margin: 0 auto; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .container-cadastro {
@@ -216,7 +215,7 @@ input[type=submit]:hover {
 .barra-superior ul li {
     margin: 10px 0px;
     color: white;
-    font-size: 18px;
+    font-size: 13px;
     display: inline;
 }
 
@@ -287,3 +286,69 @@ input[type=submit]:hover {
 #img{
     margin: 0 auto;
 }
+
+.container-table{
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #007bff;
+    border-radius: 5%;
+}
+
+.btn-finalizar {
+    background-color: #28a745; 
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-finalizar:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-finalizar:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}
+
+.tabela-servicos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tabela-servicos thead {
+    background-color: #343a40;
+    color: white;
+}
+
+.tabela-servicos th, .tabela-servicos td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabela-servicos tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+.tabela-servicos td:last-child {
+    text-align: center;
+}
+
+
+
+
